@@ -197,6 +197,8 @@ class _TimerScreenState extends State<TimerScreen> {
   }
 
   void _startTimer() {
+    _updateSetAndTotalSeconds();
+
     if (_isRunning || _setTime <= 0) {
       return; // Ne démarre pas si déjà en cours ou temps non défini/zéro
     }

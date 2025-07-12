@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:timer/screens/timer_screen.dart';
-// Pour TextInputFormatter
 
 void main() {
   runApp(const MyApp());

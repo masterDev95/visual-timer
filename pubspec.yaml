@@ -1,6 +1,7 @@
 name: timer
+description: A Flutter project to implement a simple timer with audio feedback.
 publish_to: "none"
-version: 0.1.0
+version: 0.1.1+1
 
 environment:
   sdk: ^3.7.2
