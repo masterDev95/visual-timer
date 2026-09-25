@@ -21,7 +21,7 @@ class _TimerScreenState extends State<TimerScreen> {
   int _setTime = 0; // Temps total initialement défini
 
   bool _isRunning = false;
-  Timer? _timer; // Garde une référence au Timer
+  Timer? _timer;
 
   final TextEditingController _hoursController = TextEditingController();
   final TextEditingController _minutesController = TextEditingController();
