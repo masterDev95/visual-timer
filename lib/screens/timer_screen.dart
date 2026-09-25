@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
@@ -112,61 +113,78 @@ class _TimerScreenState extends State<TimerScreen> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Minuteur Visuel')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Center(
-                  child: SizedBox(
-                    width: 200,
-                    height: 200,
-                    child: CircularProgressIndicator(
-                      value: progress,
-                      strokeWidth: 30.0,
-                      backgroundColor:
-                          Theme.of(context).brightness == Brightness.light
-                              ? Colors.grey[300]
-                              : Colors.grey[700],
-                      color: hslColor.toColor(),
-                      strokeCap: StrokeCap.round,
-                    ),
-                  ),
-                ),
-                Center(
-                  child: Text(
-                    '${_hours.toString().padLeft(2, '0')}:'
-                    '${_minutes.toString().padLeft(2, '0')}:'
-                    '${_seconds.toString().padLeft(2, '0')}',
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontFamily: 'Monospace',
-                    ),
-                  ),
-                ),
-              ],
+      body: SafeArea(
+        child: Scrollbar(
+          thumbVisibility: true,
+          child: ScrollConfiguration(
+            behavior: const MaterialScrollBehavior().copyWith(
+              dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse},
             ),
-            const SizedBox(height: 48),
-            ElevatedButton(
-              onPressed: _isRunning ? _stopTimer : _startTimer,
-              child: Text(
-                _isRunning ? 'Arrêter le Minuteur' : 'Démarrer le Minuteur',
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.symmetric(vertical: 24),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Center(
+                          child: SizedBox(
+                            width: 200,
+                            height: 200,
+                            child: CircularProgressIndicator(
+                              value: progress,
+                              strokeWidth: 30.0,
+                              backgroundColor:
+                                  Theme.of(context).brightness ==
+                                          Brightness.light
+                                      ? Colors.grey[300]
+                                      : Colors.grey[700],
+                              color: hslColor.toColor(),
+                              strokeCap: StrokeCap.round,
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: Text(
+                            '${_hours.toString().padLeft(2, '0')}:'
+                            '${_minutes.toString().padLeft(2, '0')}:'
+                            '${_seconds.toString().padLeft(2, '0')}',
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontFamily: 'Monospace',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 48),
+                    ElevatedButton(
+                      onPressed: _isRunning ? _stopTimer : _startTimer,
+                      child: Text(
+                        _isRunning
+                            ? 'Arrêter le Minuteur'
+                            : 'Démarrer le Minuteur',
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 40),
+                      child: const Divider(
+                        color: Colors.black26,
+                        height: 20,
+                        thickness: 1,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    ..._buildTimeInput(),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 20),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 40),
-              child: const Divider(
-                color: Colors.black26,
-                height: 20,
-                thickness: 1,
-              ),
-            ),
-            const SizedBox(height: 20),
-            ..._buildTimeInput(),
-          ],
+          ),
         ),
       ),
     );
